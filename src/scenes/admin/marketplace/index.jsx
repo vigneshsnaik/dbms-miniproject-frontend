@@ -1,18 +1,71 @@
 import React from "react";
-import { Typography, Button } from "@mui/material";
+import { Typography, Box, useTheme } from "@mui/material";
+import { tokens } from "../../../theme";
+import GroupIcon from "@mui/icons-material/Group";
+import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
+import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 
+import Header from "../../../components/Header";
+import { mockMarketplacedata } from "../../../data/mockData";
 function Marketplace() {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   return (
-    <div>
-      <Typography variant="h4">Marketplace</Typography>
-      <Typography variant="body1">
-        Welcome to our marketplace! Here you can find a variety of products and
-        services offered by our vendors.
-      </Typography>
-      <Button variant="contained" color="primary">
-        Browse Marketplace
-      </Button>
-    </div>
+    <Box m="20px">
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Header
+          title="MARKETPLACE"
+          subtitle="Welcome to our marketplace! Here you can find a variety of products and
+        services offered by our vendors."
+        />
+      </Box>
+      <Box
+        display="grid"
+        gridTemplateColumns="repeat(12, 1fr)"
+        gridAutoRows="140px"
+        gap="20px"
+      >
+        {/* card */}
+        {mockMarketplacedata.map((element, i) => (
+          <Box
+            key={`${element.id}-${i}`}
+            gridColumn="span 3"
+            gridRow="span 2"
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Box>
+              <Typography
+                color={colors.greenAccent[500]}
+                variant="h5"
+                fontWeight="600"
+              >
+                {element.name}
+              </Typography>
+              <Typography color={colors.grey[100]}>
+                {element.assetType}
+              </Typography>
+            </Box>
+
+            <Box>
+              <Typography color={colors.grey[100]}>
+                {element.descrption}
+              </Typography>
+            </Box>
+            <Box color={colors.grey[100]}>{element.dateacquired}</Box>
+            <Box
+              backgroundColor={colors.greenAccent[500]}
+              p="5px 10px"
+              borderRadius="4px"
+            >
+              ₹ {element.price}
+            </Box>
+          </Box>
+        ))}
+      </Box>
+    </Box>
   );
 }
 
