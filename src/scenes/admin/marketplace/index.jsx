@@ -71,7 +71,7 @@ function Marketplace() {
     >
          <Box
               backgroundColor="gray"
-              width={{ xs: "100%", md: "90px" }}
+              width={{ xs: "50%", md: "90px" }}
               borderRadius="4px"
               textAlign="center"
               height="30px"
