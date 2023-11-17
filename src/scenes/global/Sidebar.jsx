@@ -11,6 +11,7 @@ import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -75,7 +76,7 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  ADMINIS
+                  {"Project Name"}
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
@@ -145,6 +146,13 @@ const Sidebar = () => {
               title="Transactions"
               to="/admin/transactions"
               icon={<ReceiptOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Marketplace"
+              to="/admin/marketplace"
+              icon={<LocalGroceryStoreIcon />}
               selected={selected}
               setSelected={setSelected}
             />
