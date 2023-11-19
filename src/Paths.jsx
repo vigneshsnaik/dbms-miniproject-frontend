@@ -6,6 +6,12 @@ import AdminManageAssets from "./scenes/admin/manageassets";
 import AdminForm from "./scenes/admin/form";
 import AdminFAQ from "./scenes/admin/faq";
 import AdminMarketplace from "./scenes/admin/marketplace";
+import UserDashboard from "./scenes/user/dashboard";
+import UserTransactions from "./scenes/user/transactions";
+import UserManageAssets from "./scenes/user/manageassets";
+import UserForm from "./scenes/user/form";
+import UserFAQ from "./scenes/user/faq";
+import UserMarketplace from "./scenes/user/marketplace";
 import { Routes, Route } from "react-router-dom";
 
 export default function Paths() {
@@ -20,7 +26,12 @@ export default function Paths() {
       <Route path="/admin/faq" element={<AdminFAQ />} />
       <Route path="/admin/marketplace" element={<AdminMarketplace />} />
       {/* User Paths */}
-      {/* <Route path="/user/" element={UserDashboard} /> */}
+      <Route path="/user/" element={<UserDashboard />} />
+      <Route path="/user/transactions" element={<UserTransactions />} />
+      <Route path="/user/assets" element={<UserManageAssets />} />
+      <Route path="/user/faq" element={<UserFAQ />} />
+      <Route path="/user/form" element={<UserForm />} />
+      <Route path="/user/marketplace" element={<UserMarketplace />} />
     </Routes>
   );
 }
