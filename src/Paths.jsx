@@ -12,11 +12,13 @@ import UserManageAssets from "./scenes/user/manageassets";
 import UserForm from "./scenes/user/form";
 import UserFAQ from "./scenes/user/faq";
 import UserMarketplace from "./scenes/user/marketplace";
+import Login from "./scenes/global/Login";
 import { Routes, Route } from "react-router-dom";
 
 export default function Paths() {
   return (
     <Routes>
+      <Route path="/" element={<Login />} />
       {/* Admin Paths */}
       <Route path="/admin/" element={<AdminDashboard />} />
       <Route path="/admin/manageUsers" element={<AdminUsers />} />
