@@ -12,13 +12,14 @@ import UserManageAssets from "./scenes/user/manageassets";
 import UserForm from "./scenes/user/form";
 import UserFAQ from "./scenes/user/faq";
 import UserMarketplace from "./scenes/user/marketplace";
-import Login from "./scenes/global/Login";
 import { Routes, Route } from "react-router-dom";
+import UserLogin from "./scenes/global/UserLogin";
+import SignUp from "./scenes/global/Login";
 
 export default function Paths() {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<SignUp />} />
       {/* Admin Paths */}
       <Route path="/admin/" element={<AdminDashboard />} />
       <Route path="/admin/manageUsers" element={<AdminUsers />} />
@@ -29,6 +30,7 @@ export default function Paths() {
       <Route path="/admin/marketplace" element={<AdminMarketplace />} />
       {/* User Paths */}
       <Route path="/user/" element={<UserDashboard />} />
+      <Route path="/user/userlogin" element={<UserLogin />} />
       <Route path="/user/transactions" element={<UserTransactions />} />
       <Route path="/user/assets" element={<UserManageAssets />} />
       <Route path="/user/faq" element={<UserFAQ />} />
