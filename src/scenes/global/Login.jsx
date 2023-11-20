@@ -94,7 +94,7 @@ const SignUp = () => {
                 label="Password"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.email}
+                value={values.password}
                 name="password"
                 error={!!touched.password && !!errors.password}
                 helperText={touched.password && errors.password}
