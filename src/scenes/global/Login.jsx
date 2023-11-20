@@ -1,4 +1,5 @@
 import { Box, Button, TextField } from "@mui/material";
+import { Link } from 'react-router-dom'
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -13,7 +14,16 @@ const SignUp = () => {
 
   return (
     <Box m="20px">
-      <Header title="Login" subtitle="Login Page" />
+      <Header title="Sign Up" subtitle="User Signup" />
+
+      <div>
+        <Box sx={{
+          padding: '10px',
+        }}
+        >
+          <Link to="/user/userlogin">Already have an account? Login</Link>
+        </Box>
+        </div>
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -36,6 +46,7 @@ const SignUp = () => {
               sx={{
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
+              justifyContent="center" 
             >
               <TextField
                 fullWidth
@@ -74,6 +85,19 @@ const SignUp = () => {
                 name="email"
                 error={!!touched.email && !!errors.email}
                 helperText={touched.email && errors.email}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="password"
+                label="Password"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.email}
+                name="password"
+                error={!!touched.password && !!errors.password}
+                helperText={touched.password && errors.password}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -139,6 +163,7 @@ const checkoutSchema = yup.object().shape({
     .string()
     .matches(phoneRegExp, "Phone number is not valid")
     .required("required"),
+    password: yup.string().required("required"),
   address1: yup.string().required("required"),
   address2: yup.string().required("required"),
 });
@@ -146,6 +171,7 @@ const initialValues = {
   firstName: "",
   lastName: "",
   email: "",
+  password: "",
   contact: "",
   address1: "",
   address2: "",
