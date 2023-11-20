@@ -4,7 +4,7 @@ import { tokens } from "../../../theme";
 import GroupIcon from "@mui/icons-material/Group";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
-
+import cardImg from "../../../assets/card.jpeg"
 import Header from "../../../components/Header";
 import { mockMarketplacedata } from "../../../data/mockData";
 
@@ -38,11 +38,13 @@ function Marketplace() {
             justifyContent={"flex-end"}
             padding={"0.3rem"}
           >
+            
             <Box
               display="flex"
               justifyContent="space-between"
               margin="3px"
             >
+              
               <Typography
                 color={colors.greenAccent[500]}
                 variant="h5"
