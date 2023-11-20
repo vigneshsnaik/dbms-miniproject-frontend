@@ -38,7 +38,13 @@ function Marketplace() {
             justifyContent={"flex-end"}
             padding={"0.3rem"}
           >
-            
+              <img
+                  alt="asset-image"
+                  style={{maxHeight:"200px",width:"100%"}}
+                  src={cardImg}
+                  height={{xs:"20px" ,sm:"25px",md:"30px",lg:"10px"}}
+                  
+                />
             <Box
               display="flex"
               justifyContent="space-between"
