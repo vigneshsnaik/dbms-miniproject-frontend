@@ -1,55 +1,34 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
-import { mockDataContacts } from "../../../data/mockData";
+import { useEffect, useState } from "react";
 import Header from "../../../components/Header";
-import { useTheme } from "@mui/material";
-
+import { createClient } from "@supabase/supabase-js";
+const supabase = createClient(
+  process.env.REACT_APP_SUPABASE_URL,
+  process.env.REACT_APP_SUPABASE_KEY
+);
 const ManageAssets = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
+  const [assets, setAssets] = useState([]);
+  const [userData, setUserData] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    // Check if user data exists in cache
+    getAssets();
+  }, []);
+  async function getAssets() {
+    const { data } = await supabase.from("assets").select();
+    setAssets(data);
+  }
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "address",
-      headerName: "Address",
-      flex: 1,
-    },
-    {
-      field: "city",
-      headerName: "City",
-      flex: 1,
-    },
-    {
-      field: "zipCode",
-      headerName: "Zip Code",
-      flex: 1,
-    },
+    { field: "owner", headerName: "Owner", flex: 2 },
+    { field: "asset_type", headerName: "Asset Type", flex: 1 },
+    { field: "taxable", headerName: "Taxable", flex: 1 },
+    { field: "marketplace_listed", headerName: "Marketplace Listed", flex: 1 },
+    { field: "price", headerName: "Price", flex: 0.5 },
   ];
 
   return (
@@ -88,7 +67,7 @@ const ManageAssets = () => {
         }}
       >
         <DataGrid
-          rows={mockDataContacts}
+          rows={assets}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />
