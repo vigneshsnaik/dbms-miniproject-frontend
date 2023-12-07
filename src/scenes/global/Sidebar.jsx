@@ -12,6 +12,7 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
+import { useEffect } from "react";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -32,6 +33,23 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 const Sidebar = () => {
+  const [userData, setUserData] = useState(null);
+  const [userID, setUserID] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    // Check if user data exists in cache
+    const cachedUserData = localStorage.getItem("userName");
+    if (cachedUserData) {
+      setUserData(cachedUserData);
+    }
+
+    if (localStorage.getItem("type") === true) {
+      setIsAdmin(true);
+    }
+    if (localStorage.getItem("userId")) {
+      setUserID(localStorage.getItem("userId"));
+    }
+  }, []);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -98,15 +116,18 @@ const Sidebar = () => {
               </Box>
               <Box textAlign="center">
                 <Typography
+                  onClick={() => {
+                    window.alert("User ID: " + userID);
+                  }}
                   variant="h2"
                   color={colors.grey[100]}
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  M Arshad
+                  {userData}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  User
+                  {isAdmin ? "Admin" : "Owner"}
                 </Typography>
               </Box>
             </Box>
@@ -115,7 +136,7 @@ const Sidebar = () => {
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
-              to="/admin/"
+              to="/"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -130,28 +151,28 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Manage Users"
-              to="/admin/manageusers"
+              to="/manageusers"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Manage Assets"
-              to="/admin/assets"
+              to="/assets"
               icon={<ApartmentIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Transactions"
-              to="/admin/transactions"
+              to="/transactions"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Marketplace"
-              to="/admin/marketplace"
+              to="/marketplace"
               icon={<LocalGroceryStoreIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -166,14 +187,14 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Profile Form"
-              to="/admin/form"
+              to="/form"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="FAQ Page"
-              to="/admin/faq"
+              to="/faq"
               icon={<HelpOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
