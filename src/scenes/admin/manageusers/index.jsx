@@ -15,14 +15,9 @@ const supabase = createClient(
 const Users = () => {
   const [owners, setOwners] = useState([]);
 
-  const [userData, setUserData] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     // Check if user data exists in cache
-    const cachedUserData = localStorage.getItem("userId");
-    if (cachedUserData) {
-      setUserData(cachedUserData);
-    }
 
     if (localStorage.getItem("type") === true) {
       setIsAdmin(true);

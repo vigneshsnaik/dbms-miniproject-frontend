@@ -12,8 +12,7 @@ const ManageAssets = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [assets, setAssets] = useState([]);
-  const [userData, setUserData] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+
   useEffect(() => {
     // Check if user data exists in cache
     getAssets();

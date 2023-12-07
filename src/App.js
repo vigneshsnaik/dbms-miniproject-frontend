@@ -12,16 +12,11 @@ function App() {
   const [isSidebar, setIsSidebar] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     // Check if user data exists in cache
     const cachedUserData = localStorage.getItem("userId");
     if (cachedUserData) {
       setUserData(cachedUserData);
-    }
-
-    if (localStorage.getItem("type")) {
-      setIsAdmin(true);
     }
   }, []);
 

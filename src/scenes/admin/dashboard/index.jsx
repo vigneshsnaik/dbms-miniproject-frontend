@@ -1,7 +1,6 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { tokens } from "../../../theme";
 import { Link } from "react-router-dom";
-import { mockTransactions } from "../../../data/mockData";
 import Apartment from "@mui/icons-material/Apartment";
 import GroupIcon from "@mui/icons-material/Group";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
