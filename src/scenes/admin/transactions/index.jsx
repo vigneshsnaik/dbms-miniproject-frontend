@@ -1,45 +1,32 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
-import { mockDataInvoices } from "../../../data/mockData";
+import { useEffect, useState } from "react";
 import Header from "../../../components/Header";
-
+import { createClient } from "@supabase/supabase-js";
+const supabase = createClient(
+  process.env.REACT_APP_SUPABASE_URL,
+  process.env.REACT_APP_SUPABASE_KEY
+);
 const Transactions = () => {
+  const [transactions, setTransactions] = useState([]);
+  useEffect(() => {
+    getTransactions();
+  }, []);
+  async function getTransactions() {
+    const { data } = await supabase.from("transactions").select();
+    setTransactions(data);
+  }
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
-    { field: "id", headerName: "ID" },
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "cost",
-      headerName: "Cost",
-      flex: 1,
-      renderCell: (params) => (
-        <Typography color={colors.greenAccent[500]}>
-          ${params.row.cost}
-        </Typography>
-      ),
-    },
-    {
-      field: "date",
-      headerName: "Date",
-      flex: 1,
-    },
+    { field: "id", headerName: "ID", flex: 3 },
+    { field: "asset_id", headerName: "Asset ID", flex: 0.5 },
+    { field: "sender_id", headerName: "Sender ID", flex: 2 },
+    { field: "receiver_id", headerName: "Receiver ID", flex: 2 },
+    { field: "contract", headerName: "Contract", flex: 2 },
+    { field: "time", headerName: "time", flex: 1 },
   ];
 
   return (
@@ -74,8 +61,9 @@ const Transactions = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataInvoices} columns={columns} />
+        <DataGrid rows={transactions} columns={columns} />
       </Box>
+      {console.log(transactions)}
     </Box>
   );
 };
