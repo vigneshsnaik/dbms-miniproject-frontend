@@ -1,15 +1,38 @@
 import { Box, Button, TextField } from "@mui/material";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-
+import { createClient } from "@supabase/supabase-js";
+const supabase = createClient(
+  process.env.REACT_APP_SUPABASE_URL,
+  process.env.REACT_APP_SUPABASE_KEY
+);
 const UserLogin = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [user, setUser] = useState([]);
 
+  async function getUser(values) {
+    const { data } = await supabase
+      .from("login")
+      .select("password,admin,name")
+      .eq("id", values.userID);
+    setUser(data);
+  }
   const handleFormSubmit = (values) => {
-    console.log(values);
+    getUser(values);
+    if (values.password === user[0].password) {
+      localStorage.setItem("userId", values.userID);
+      localStorage.setItem("userName", user[0].name);
+      localStorage.setItem("type", user[0].admin);
+      console.log("admin", user[0]);
+      console.log("user", values.userID);
+      window.location.reload(true);
+    } else {
+      window.alert("Invalid username or password");
+    }
   };
 
   return (
@@ -45,13 +68,13 @@ const UserLogin = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Email"
+                label="userID"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
+                value={values.userID}
+                name="userID"
+                error={!!touched.userID && !!errors.userID}
+                helperText={touched.userID && errors.userID}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -81,11 +104,11 @@ const UserLogin = () => {
 };
 
 const checkoutSchema = yup.object().shape({
-  email: yup.string().email("invalid email").required("required"),
-  password: yup.string().required("required")
+  userID: yup.string().required("required"),
+  password: yup.string().required("required"),
 });
 const initialValues = {
-  email: "",
+  userID: "",
   password: "",
 };
 
