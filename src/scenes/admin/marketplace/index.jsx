@@ -59,21 +59,18 @@ function Marketplace() {
       </Box>
       <Box
         display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
+        gridTemplateColumns={{ xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(4, 1fr)" }}
         gridAutoRows="140px"
-        gap="20px"
+        gap={{ xs: "80px", sm: "20px" }}
+        
       >
         {/* Iterate over marketplaceData */}
         {marketplaceData.map((element, i) => (
           <Box
+            
             key={`${element.id}-${i}`}
             className="asset-card"
-            gridColumn={{
-              xs: "span 12",
-              sm: "span 6",
-              md: "span 4",
-              lg: "span 3",
-            }}
+            gridColumn="span 1"
             gridRow="span 2"
           >
             <div className="asset-img-wrap">
@@ -108,19 +105,19 @@ function Marketplace() {
               </Typography>
             </Box>
             <Box
-              display={{ md: "flex", xl: "flex" }}
-              justifyContent={{ md: "space-between" }}
-              alignItems={{ md: "center" }}
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
               marginTop="5px"
             >
               <Box
                 backgroundColor="gray"
-                width={{ xs: "50%", md: "90px" }}
+                width="90px"
                 borderRadius="4px"
                 textAlign="center"
                 height="30px"
                 p="5px 10px"
-                marginBottom={{ xs: "5px" }}
+                marginBottom="5px"
               >
                 {new Date(element.date_acquired).toLocaleDateString()}
               </Box>
