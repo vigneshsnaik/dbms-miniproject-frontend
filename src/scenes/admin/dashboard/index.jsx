@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, useTheme, styled } from "@mui/material";
 import { tokens } from "../../../theme";
 import { Link } from "react-router-dom";
 import Apartment from "@mui/icons-material/Apartment";
@@ -7,6 +7,13 @@ import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import Header from "../../../components/Header";
 import StatBox from "../../../components/StatBox";
+
+const HoverBox = styled(Box)(({ theme }) => ({
+  transition: "transform 0.3s ease, background-color 0.3s ease",
+  "&:hover": {
+    backgroundColor: theme.palette.primary.light,
+  },
+}));
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -22,23 +29,22 @@ const Dashboard = () => {
       {/* GRID & CHARTS */}
       <Box
         display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
+        gridTemplateColumns="repeat(1, 1fr)" // Single column for mobile
         gridAutoRows="140px"
         gap="20px"
       >
         {/* ROW 1 */}
-        <Box
-          gridColumn="span 6"
+        <HoverBox
+          gridColumn="span 12" // Span the full width for mobile
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <Link to="/assets">
+          <Link to="/assets" style={{ textDecoration: "none" }}>
             <StatBox
               title="Assets"
-              //   add href here
               subtitle="123 assets listed"
               icon={
                 <Apartment
@@ -47,16 +53,16 @@ const Dashboard = () => {
               }
             />
           </Link>
-        </Box>
-        <Box
-          gridColumn="span 6"
+        </HoverBox>
+        <HoverBox
+          gridColumn="span 12" // Span the full width for mobile
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <Link to="/marketplace">
+          <Link to="/marketplace" style={{ textDecoration: "none" }}>
             <StatBox
               title="Marketplace"
               subtitle="Manage Marketplace Listing"
@@ -67,19 +73,18 @@ const Dashboard = () => {
               }
             />
           </Link>
-        </Box>
-        <Box
-          gridColumn="span 6"
+        </HoverBox>
+        <HoverBox
+          gridColumn="span 12" // Span the full width for mobile
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <Link to="/transactions">
+          <Link to="/transactions" style={{ textDecoration: "none" }}>
             <StatBox
               title="Transactions"
-              //   add href here
               subtitle="View transactions"
               icon={
                 <LibraryAddIcon
@@ -88,19 +93,18 @@ const Dashboard = () => {
               }
             />
           </Link>
-        </Box>
-        <Box
-          gridColumn="span 6"
+        </HoverBox>
+        <HoverBox
+          gridColumn="span 12" // Span the full width for mobile
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <Link to="/manageusers">
+          <Link to="/manageusers" style={{ textDecoration: "none" }}>
             <StatBox
               title="Users"
-              //   add href here
               subtitle="Manage Users"
               icon={
                 <GroupIcon
@@ -109,9 +113,7 @@ const Dashboard = () => {
               }
             />
           </Link>
-        </Box>
-
-        {/* ROW 2 */}
+        </HoverBox>
       </Box>
     </Box>
   );
