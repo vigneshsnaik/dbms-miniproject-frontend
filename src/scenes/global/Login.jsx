@@ -42,7 +42,7 @@ const SignUp = () => {
     <Box m="20px">
       <Header title="Sign Up" subtitle="User Signup" />
 
-      <div>
+      {/* <div>
         <Box
           sx={{
             padding: "10px",
@@ -50,7 +50,7 @@ const SignUp = () => {
         >
           <Link to="/login">Already have an account? Login</Link>
         </Box>
-      </div>
+      </div> */}
 
       <Formik
         onSubmit={handleFormSubmit}
