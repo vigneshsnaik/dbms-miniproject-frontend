@@ -5,7 +5,6 @@ import cardImg from "../../../assets/card.jpeg";
 import Header from "../../../components/Header";
 import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
-
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
   process.env.REACT_APP_SUPABASE_KEY
@@ -20,6 +19,7 @@ function Marketplace() {
   async function getMarketplaceData() {
     const { data } = await supabase.from("marketplace").select();
     setMarketplaceData(data);
+    console.log("MarketPlace Data",data)
   }
 
   const colors = tokens(theme.palette.mode);
@@ -42,6 +42,7 @@ function Marketplace() {
         {/* card */}
         {marketplaceData &&
           marketplaceData.map((element, i) => (
+           
             <Box
               key={`${element.id}-${i}`}
               gridColumn={{
@@ -60,7 +61,7 @@ function Marketplace() {
               <img
                 alt=""
                 style={{ maxHeight: "190px", width: "100%" }}
-                src={cardImg}
+                src={element.imgUrl?element.imgUrl:cardImg}
                 height={{ xs: "20px", sm: "25px", md: "30px", lg: "10px" }}
               />
               <Box display="flex" justifyContent="space-between" margin="3px">
