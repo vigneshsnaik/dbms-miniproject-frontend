@@ -4,11 +4,98 @@ import { tokens } from "../../../theme";
 import { useEffect, useState } from "react";
 import Header from "../../../components/Header";
 import { createClient } from "@supabase/supabase-js";
+import contract from "../../../contracts/NFTCollectible.json";
+import Web3 from "web3";
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
   process.env.REACT_APP_SUPABASE_KEY
 );
+
+const contractAddress = "0x14b962a767d27eEB33f056af862ef62EA601194a";
+const abi = contract.abi;
+
 const ManageAssets = () => {
+  const [currentAccount, setCurrentAccount] = useState(null);
+
+  const checkWalletIsConnected = () => {
+    if (window.ethereum && window.ethereum.selectedAddress) {
+      setCurrentAccount(window.ethereum.selectedAddress);
+    }
+  };
+
+  const connectWalletHandler = async () => {
+    try {
+      if (window.ethereum) {
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        setCurrentAccount(accounts[0]);
+        console.log("Connected:", accounts[0]);
+      } else {
+        console.log("No ethereum provider found");
+      }
+    } catch (error) {
+      console.log("Error connecting wallet:", error);
+    }
+  };
+  const mintNftHandler = async () => {
+    try {
+      if (!window.ethereum) {
+        console.log("Please install a web3 provider, like MetaMask");
+        return;
+      }
+
+      const web3 = new Web3(window.ethereum);
+      const accounts = await web3.eth.getAccounts();
+
+      if (!abi) {
+        console.log("Please provide a valid ABI ");
+        return;
+      }
+      if (!contractAddress) {
+        console.log("Please provide a valid contract address");
+        return;
+      }
+
+      const contractInstance = new web3.eth.Contract(abi, contractAddress);
+
+      if (!contractInstance.methods.mint) {
+        console.log("The mint method does not exist on this contract");
+        return;
+      }
+
+      const result = await contractInstance.methods.mint().send({
+        from: accounts[0],
+      });
+
+      console.log("NFT minted:", result);
+    } catch (error) {
+      console.log("Error minting NFT:", error);
+    }
+  };
+
+  const connectWalletButton = () => {
+    return (
+      <button
+        onClick={connectWalletHandler}
+        className="cta-button connect-wallet-button"
+      >
+        Connect Wallet
+      </button>
+    );
+  };
+
+  const mintNftButton = () => {
+    return (
+      <button onClick={mintNftHandler} className="cta-button mint-nft-button">
+        Mint NFT
+      </button>
+    );
+  };
+
+  useEffect(() => {
+    checkWalletIsConnected();
+  }, []);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [assets, setAssets] = useState([]);
@@ -19,7 +106,9 @@ const ManageAssets = () => {
   }, []);
   async function getAssets() {
     const { data } = await supabase.from("assets").select();
-    setAssets(data);
+    if (data) {
+      setAssets(data.filter((asset) => asset !== null));
+    }
   }
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
@@ -71,6 +160,8 @@ const ManageAssets = () => {
           components={{ Toolbar: GridToolbar }}
         />
       </Box>
+      {mintNftButton()}
+      {connectWalletButton()}
     </Box>
   );
 };
