@@ -119,6 +119,7 @@ const Sidebar = () => {
                   onClick={() => {
                     window.alert("User ID: " + userID);
                   }}
+                  textTransform="capitalize"
                   variant="h2"
                   color={colors.grey[100]}
                   fontWeight="bold"
