@@ -1,8 +1,10 @@
-import { Box, Button, TextField } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Button, TextField,Checkbox } from "@mui/material";
+import { Link as RouterLink } from 'react-router-dom';
 import { useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { styled } from '@mui/system';
+
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import { createClient } from "@supabase/supabase-js";
@@ -10,6 +12,17 @@ const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
   process.env.REACT_APP_SUPABASE_KEY
 );
+
+
+const StyledLink = styled(RouterLink)({
+  color: 'white',
+  textDecoration: 'none',
+  '&:hover': {
+    textDecoration: 'none', // Ensures no decoration on hover
+  }
+});
+
+
 const UserLogin = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [user, setUser] = useState([]);
@@ -35,12 +48,15 @@ const UserLogin = () => {
     }
   };
 
+
+
   return (
-    <Box m="20px">
+    <Box >
       <Header title="Log In" subtitle="User Login" />
-      <div>
-        <Link to="/">Don't have an account? Signup</Link>
-      </div>
+      {/* <div  style={{paddingBottom:"10px" }}>
+      <StyledLink to="/signup">Don't have an account? Signup</StyledLink>
+      <Checkbox/>
+      </div> */}
 
       <Formik
         onSubmit={handleFormSubmit}
