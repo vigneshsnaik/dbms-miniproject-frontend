@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
-import { Typography, Box, useTheme } from "@mui/material";
+import { Typography, Box, useTheme, Button } from "@mui/material";
 import { tokens } from "../../../theme";
 import cardImg from "../../../assets/card.jpeg";
 import Header from "../../../components/Header";
 import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
+import "./Marketplace.css"; // Import your CSS file for styling
+
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
   process.env.REACT_APP_SUPABASE_KEY
 );
+
 function Marketplace() {
   const [marketplaceData, setMarketplaceData] = useState([]);
   const theme = useTheme();
@@ -16,10 +19,11 @@ function Marketplace() {
     // Check if user data exists in cache
     getMarketplaceData();
   }, []);
+
   async function getMarketplaceData() {
     const { data } = await supabase.from("marketplace").select();
     setMarketplaceData(data);
-    console.log("MarketPlace Data",data)
+    console.log("MarketPlace Data", data);
   }
 
   const colors = tokens(theme.palette.mode);
@@ -42,7 +46,6 @@ function Marketplace() {
         {/* card */}
         {marketplaceData &&
           marketplaceData.map((element, i) => (
-           
             <Box
               key={`${element.id}-${i}`}
               gridColumn={{
@@ -52,18 +55,26 @@ function Marketplace() {
                 lg: "span 3",
               }}
               gridRow="span 2"
-              backgroundColor={colors.primary[400]}
-              display="flex"
-              flexDirection="column"
-              justifyContent={"flex-end"}
-              padding={"0.3rem"}
+              className="asset-card" // Add a class for styling
             >
-              <img
-                alt=""
-                style={{ maxHeight: "190px", width: "100%" }}
-                src={element.imgUrl?element.imgUrl:cardImg}
-                height={{ xs: "20px", sm: "25px", md: "30px", lg: "10px" }}
-              />
+              <div className="asset-img-wrap">
+                <img
+                  alt=""
+                  className="asset-img"
+                  src={element.imgUrl ? element.imgUrl : cardImg}
+                />
+                <div className="asset-img-overlay">
+                  <Typography
+                    color="inherit"
+                    variant="body2"
+                    textAlign="center"
+                  >
+                    <Button variant="contained" color="primary">
+                      Buy Now
+                    </Button>
+                  </Typography>
+                </div>
+              </div>
               <Box display="flex" justifyContent="space-between" margin="3px">
                 <Typography
                   color={colors.greenAccent[500]}
@@ -76,13 +87,14 @@ function Marketplace() {
                   {element.asset_type}
                 </Typography>
               </Box>
-
               <Box>
-                <Typography color={colors.grey[100]}>
+                <Typography
+                  color={colors.grey[100]}
+                  style={{ textTransform: "capitalize" }}
+                >
                   {element.description}
                 </Typography>
               </Box>
-
               <Box
                 display={{ md: "flex", xl: "flex" }}
                 justifyContent={{ md: "space-between" }}
@@ -100,11 +112,10 @@ function Marketplace() {
                 >
                   {new Date(element.date_acquired).toLocaleDateString()}
                 </Box>
-
                 <Box
                   backgroundColor={colors.greenAccent[500]}
                   p="5px 10px"
-                  width={{ xs: "100%", md: "60px" }}
+                  width="auto"
                   borderRadius="4px"
                   textAlign="center"
                 >
