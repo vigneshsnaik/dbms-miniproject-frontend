@@ -17,10 +17,17 @@ function Marketplace() {
 
   // Function to open MetaMask
   async function openMetaMask() {
-    try {
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-    } catch (error) {
-      console.error("Error opening MetaMask:", error);
+    // Check if MetaMask is installed
+    if (window.ethereum && window.ethereum.isMetaMask) {
+      try {
+        // Request MetaMask access
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+      } catch (error) {
+        console.error("Error opening MetaMask:", error);
+      }
+    } else {
+      // If MetaMask is not installed, open a new window
+      window.open('https://metamask.io/');
     }
   }
 
