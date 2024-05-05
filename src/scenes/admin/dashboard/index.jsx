@@ -9,9 +9,9 @@ import Header from "../../../components/Header";
 import StatBox from "../../../components/StatBox";
 
 const HoverBox = styled(Box)(({ theme }) => ({
-  transition: "transform 0.3s ease, background-color 0.3s ease",
+  transition: "transform 0.3s ease, background-color 0.3s ease", 
   "&:hover": {
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: theme.palette.primary.light, 
   },
 }));
 
@@ -29,13 +29,13 @@ const Dashboard = () => {
       {/* GRID & CHARTS */}
       <Box
         display="grid"
-        gridTemplateColumns="repeat(1, 1fr)" // Single column for mobile
+        gridTemplateColumns="repeat(12, 1fr)"
         gridAutoRows="140px"
         gap="20px"
       >
         {/* ROW 1 */}
         <HoverBox
-          gridColumn="span 12" // Span the full width for mobile
+          gridColumn="span 6"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"
@@ -55,7 +55,7 @@ const Dashboard = () => {
           </Link>
         </HoverBox>
         <HoverBox
-          gridColumn="span 12" // Span the full width for mobile
+          gridColumn="span 6"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"
@@ -75,7 +75,7 @@ const Dashboard = () => {
           </Link>
         </HoverBox>
         <HoverBox
-          gridColumn="span 12" // Span the full width for mobile
+          gridColumn="span 6"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"
@@ -95,7 +95,7 @@ const Dashboard = () => {
           </Link>
         </HoverBox>
         <HoverBox
-          gridColumn="span 12" // Span the full width for mobile
+          gridColumn="span 6"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"
